@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexaBrand - Digital Marketing Agency</title>
+<style>
+/* ===== CSS Reset & Variables ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f4f6fb;
+  --text: #1a1a2e;
+  --text-muted: #555a70;
+  --primary: #4f46e5;
+  --primary-light: #818cf8;
+  --primary-dark: #3730a3;
+  --accent: #06b6d4;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --gradient: linear-gradient(135deg, #4f46e5, #06b6d4);
+  --shadow: 0 4px 24px rgba(79,70,229,.12);
+  --shadow-lg: 0 12px 40px rgba(79,70,229,.18);
+  --radius: 16px;
+  --nav-bg: rgba(255,255,255,.85);
+  --footer-bg: #1a1a2e;
+}
+
+.dark {
+  --bg: #0f0f1a;
+  --bg-alt: #181830;
+  --text: #e8e8f0;
+  --text-muted: #9a9ab8;
+  --card-bg: #1e1e36;
+  --card-border: #2d2d50;
+  --shadow: 0 4px 24px rgba(0,0,0,.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.4);
+  --nav-bg: rgba(15,15,26,.9);
+  --footer-bg: #0a0a14;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background .3s, color .3s;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ===== Navigation ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--card-border);
+  transition: background .3s;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+}
+.logo { font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: .95rem; font-weight: 500; color: var(--text-muted); transition: color .2s; }
+.nav-links a:hover { color: var(--primary); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.theme-toggle {
+  background: none; border: 2px solid var(--card-border); border-radius: 50%;
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; transition: border-color .2s;
+}
+.theme-toggle:hover { border-color: var(--primary); }
+.hamburger { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text); }
+
+/* ===== Sections ===== */
+section { padding: 100px 24px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.section-label { text-transform: uppercase; font-size: .8rem; font-weight: 700; letter-spacing: 3px; color: var(--primary); margin-bottom: 12px; }
+.section-title { font-size: 2.4rem; font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+.section-sub { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin-bottom: 48px; }
+.centered { text-align: center; }
+.centered .section-sub { margin-left: auto; margin-right: auto; }
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: .95rem;
+  border: none; transition: transform .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--gradient); color: #fff; box-shadow: 0 4px 20px rgba(79,70,229,.3); }
+.btn-primary:hover { box-shadow: 0 8px 30px rgba(79,70,229,.4); }
+.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+.btn-outline:hover { background: var(--primary); color: #fff; }
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  background: var(--bg);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -40%; right: -20%;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,70,229,.12) 0%, transparent 70%);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -30%; left: -10%;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(6,182,212,.1) 0%, transparent 70%);
+}
+.hero .container { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-alt); border: 1px solid var(--card-border);
+  padding: 8px 18px; border-radius: 50px; font-size: .85rem; font-weight: 600; color: var(--primary); margin-bottom: 24px;
+}
+.hero h1 { font-size: 3.6rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+.hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 36px; max-width: 500px; }
+.hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-visual {
+  display: flex; justify-content: center; align-items: center;
+}
+.hero-graphic {
+  width: 100%; max-width: 420px; aspect-ratio: 1;
+  background: var(--gradient); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 6rem; color: #fff;
+  animation: morph 8s ease-in-out infinite;
+  box-shadow: var(--shadow-lg);
+}
+@keyframes morph {
+  0%,100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+}
+
+/* ===== About ===== */
+.about { background: var(--bg-alt); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.about-text p { color: var(--text-muted); margin-bottom: 20px; font-size: 1.05rem; }
+.about-cards { display: grid; gap: 20px; }
+.about-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow);
+  transition: transform .2s;
+}
+.about-card:hover { transform: translateY(-4px); }
+.about-card .icon { font-size: 1.6rem; margin-bottom: 12px; }
+.about-card h4 { font-weight: 700; margin-bottom: 6px; }
+.about-card p { font-size: .9rem; color: var(--text-muted); }
+
+/* ===== Services ===== */
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.service-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  padding: 36px 28px; border-radius: var(--radius); box-shadow: var(--shadow);
+  transition: transform .2s, box-shadow .2s; text-align: center;
+}
+.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.service-icon {
+  width: 64px; height: 64px; margin: 0 auto 20px;
+  background: var(--gradient); border-radius: 16px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.7rem; color: #fff;
+}
+.service-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+.service-card p { font-size: .92rem; color: var(--text-muted); }
+
+/* ===== Stats ===== */
+.stats { background: var(--gradient); padding: 60px 24px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
+.stat-item h3 { font-size: 2.8rem; font-weight: 800; color: #fff; }
+.stat-item p { color: rgba(255,255,255,.8); font-weight: 500; margin-top: 4px; }
+
+/* ===== Portfolio ===== */
+.portfolio { background: var(--bg-alt); }
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.portfolio-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  transition: transform .2s;
+}
+.portfolio-card:hover { transform: translateY(-6px); }
+.portfolio-thumb {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; color: #fff;
+}
+.portfolio-info { padding: 24px; }
+.portfolio-info h3 { font-weight: 700; margin-bottom: 6px; }
+.portfolio-info p { font-size: .9rem; color: var(--text-muted); margin-bottom: 12px; }
+.tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: .75rem; font-weight: 600; background: var(--bg-alt); color: var(--primary); margin-right: 6px; }
+
+/* ===== Pitch ===== */
+.pitch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 40px; }
+.pitch-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  padding: 32px; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.pitch-card .icon { font-size: 1.8rem; margin-bottom: 14px; }
+.pitch-card h3 { font-weight: 700; margin-bottom: 8px; }
+.pitch-card p { font-size: .95rem; color: var(--text-muted); }
+
+/* ===== Testimonials ===== */
+.testimonials { background: var(--bg-alt); }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.testimonial-card {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  padding: 32px; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.stars { color: #f59e0b; margin-bottom: 14px; font-size: 1.1rem; }
+.testimonial-card blockquote { font-style: italic; color: var(--text-muted); margin-bottom: 18px; font-size: .95rem; line-height: 1.7; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.author-avatar {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--gradient);
+  display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700;
+}
+.author-info h4 { font-weight: 700; font-size: .95rem; }
+.author-info p { font-size: .8rem; color: var(--text-muted); }
+
+/* ===== Contact ===== */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.contact-info h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 16px; }
+.contact-info p { color: var(--text-muted); margin-bottom: 24px; }
+.contact-item { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.contact-item .ci-icon {
+  width: 44px; height: 44px; border-radius: 12px; background: var(--bg-alt);
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.contact-item p { font-size: .95rem; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: .85rem; font-weight: 600; }
+.form-group input, .form-group textarea {
+  padding: 12px 16px; border: 1px solid var(--card-border); border-radius: 12px;
+  background: var(--card-bg); color: var(--text); font-size: .95rem;
+  transition: border-color .2s; outline: none; font-family: inherit;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-error { color: #ef4444; font-size: .8rem; display: none; }
+
+/* ===== Footer ===== */
+footer {
+  background: var(--footer-bg); color: #a0a0c0; padding: 48px 24px 24px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+}
+.footer-logo { font-size: 1.3rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: .9rem; transition: color .2s; }
+.footer-links a:hover { color: #fff; }
+.footer-copy { text-align: center; padding-top: 24px; margin-top: 24px; border-top: 1px solid #2d2d50; font-size: .85rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+/* ===== Modal ===== */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--card-bg); border-radius: var(--radius);
+  max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto;
+  padding: 40px; box-shadow: var(--shadow-lg); position: relative;
+  animation: modalIn .3s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none; font-size: 1.5rem; color: var(--text-muted); transition: color .2s;
+}
+.modal-close:hover { color: var(--text); }
+.modal h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+.modal .modal-sub { color: var(--text-muted); margin-bottom: 24px; }
+.modal-step { display: flex; gap: 16px; margin-bottom: 20px; }
+.step-num {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gradient); color: #fff; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-content h4 { font-weight: 700; margin-bottom: 4px; }
+.step-content p { font-size: .9rem; color: var(--text-muted); }
+
+/* ===== Toast ===== */
+.toast-container { position: fixed; top: 80px; right: 24px; z-index: 300; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  padding: 14px 24px; border-radius: 12px; box-shadow: var(--shadow-lg);
+  font-size: .9rem; font-weight: 500;
+  animation: toastIn .3s ease, toastOut .3s ease 2.7s forwards;
+  display: flex; align-items: center; gap: 10px;
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(60px); } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(60px); } }
+
+/* ===== Mobile Menu ===== */
+.mobile-menu {
+  display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 99; padding: 24px;
+  flex-direction: column; gap: 20px;
+}
+.mobile-menu.active { display: flex; }
+.mobile-menu a { font-size: 1.2rem; font-weight: 600; padding: 12px 0; border-bottom: 1px solid var(--card-border); }
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: block; }
+  .hero .container { grid-template-columns: 1fr; text-align: center; }
+  .hero h1 { font-size: 2.6rem; }
+  .hero p { margin: 0 auto 36px; }
+  .hero-buttons { justify-content: center; }
+  .hero-visual { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .pitch-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .section-title { font-size: 2rem; }
+}
+@media (max-width: 500px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2rem; }
+  section { padding: 60px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="logo">NexaBrand</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#pitch">Pitch</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
+  <a href="#pitch" onclick="closeMenu()">Pitch</a>
+  <a href="#testimonials" onclick="closeMenu()">Reviews</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- ===== Hero Section ===== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div>
+      <div class="hero-badge">🚀 #1 Digital Marketing Agency</div>
+      <h1>Grow Your Brand with <span>NexaBrand</span></h1>
+      <p>We help local businesses dominate the digital landscape with cutting-edge marketing strategies, stunning websites, and data-driven campaigns.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">Get Started →</a>
+        <a href="#pitch" class="btn btn-outline">See Our Pitch</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-graphic">📈</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About Section ===== -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">We Turn Ideas into Digital Success Stories</h2>
+        <p>NexaBrand is a full-service digital marketing agency based in your city. Since 2019, we've helped 200+ local businesses establish powerful online presences and generate real, measurable results.</p>
+        <p>Our team of strategists, designers, and developers works hand-in-hand with you to craft campaigns that resonate with your audience and drive growth.</p>
+      </div>
+      <div class="about-cards">
+        <div class="about-card">
+          <div class="icon">🎯</div>
+          <h4>Our Mission</h4>
+          <p>Empower local businesses to compete and win in the digital era through innovative, affordable marketing solutions.</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🔭</div>
+          <h4>Our Vision</h4>
+          <p>To be the go-to growth partner for every ambitious local business, building a community of thriving brands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Services Section ===== -->
+<section class="services" id="services">
+  <div class="container centered">
+    <p class="section-label">Our Services</p>
+    <h2 class="section-title">Everything You Need to Grow</h2>
+    <p class="section-sub">From branding to analytics, we offer end-to-end digital marketing solutions tailored for local businesses.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Website Design</h3>
+        <p>Beautiful, fast, mobile-responsive websites that convert visitors into customers.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Social Media Marketing</h3>
+        <p>Strategic content and ad campaigns across Instagram, Facebook, and TikTok.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>SEO & Local Search</h3>
+        <p>Rank higher on Google and attract customers searching for your services nearby.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✉️</div>
+        <h3>Email Campaigns</h3>
+        <p>Automated email sequences that nurture leads and drive repeat business.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Analytics & Reporting</h3>
+        <p>Data-driven insights and monthly reports so you know exactly what's working.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Stats Section ===== -->
+<section class="stats" id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><h3 class="counter" data-target="200">0</h3><p>Clients Served</p></div>
+      <div class="stat-item"><h3 class="counter" data-target="540">0</h3><p>Projects Delivered</p></div>
+      <div class="stat-item"><h3 class="counter" data-target="98">0</h3><p>% Satisfaction</p></div>
+      <div class="stat-item"><h3 class="counter" data-target="5">0</h3><p>Years Experience</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Portfolio Section ===== -->
+<section class="portfolio" id="portfolio">
+  <div class="container centered">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Recent Work</h2>
+    <p class="section-sub">A glimpse of the projects we've delivered for our amazing clients.</p>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">🏪</div>
+        <div class="portfolio-info">
+          <h3>Urban Bites Café</h3>
+          <p>Complete brand identity and social media strategy that increased foot traffic by 60%.</p>
+          <span class="tag">Branding</span><span class="tag">Social Media</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">🏋️</div>
+        <div class="portfolio-info">
+          <h3>FitZone Gym</h3>
+          <p>Website redesign and Google Ads campaign generating 300+ leads per month.</p>
+          <span class="tag">Web Design</span><span class="tag">PPC</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">💇</div>
+        <div class="portfolio-info">
+          <h3>Glow Salon</h3>
+          <p>Instagram growth from 500 to 15K followers with a targeted content strategy.</p>
+          <span class="tag">Instagram</span><span class="tag">Content</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Live Pitch Section ===== -->
+<section class="pitch-section" id="pitch">
+  <div class="container centered">
+    <p class="section-label">Live Pitch</p>
+    <h2 class="section-title">Why NexaBrand?</h2>
+    <p class="section-sub">Here's our pitch — clear, honest, and to the point.</p>
+    <div class="pitch-grid">
+      <div class="pitch-card">
+        <div class="icon">😩</div>
+        <h3>The Problem</h3>
+        <p>Most local businesses struggle with inconsistent marketing, wasted ad spend, and websites that don't convert — losing customers to competitors every day.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="icon">💡</div>
+        <h3>Our Solution</h3>
+        <p>NexaBrand provides an all-in-one marketing partner: strategy, design, execution, and analytics — so you can focus on running your business.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="icon">🎯</div>
+        <h3>Target Audience</h3>
+        <p>Small to medium local businesses — restaurants, salons, gyms, clinics, retail shops — looking to grow their customer base digitally.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="icon">🏆</div>
+        <h3>Why Choose Us</h3>
+        <p>Transparent pricing, dedicated account managers, proven results, and a team that genuinely cares about your growth.</p>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="openModal()">🎤 View Full Pitch Presentation</button>
+  </div>
+</section>
+
+<!-- ===== Testimonials Section ===== -->
+<section class="testimonials" id="testimonials">
+  <div class="container centered">
+    <p class="section-label">Testimonials</p>
+    <h2 class="section-title">What Our Clients Say</h2>
+    <p class="section-sub">Don't just take our word for it — hear from the businesses we've helped grow.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"NexaBrand transformed our online presence completely. We went from invisible to fully booked in just 3 months!"</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">SK</div>
+          <div class="author-info"><h4>Sarah Kim</h4><p>Owner, Urban Bites Café</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Their SEO work got us to page one of Google. The leads keep coming in and our revenue is up 40%."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div class="author-info"><h4>Mike Rodriguez</h4><p>Manager, FitZone Gym</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Professional, creative, and always responsive. They feel like part of our team. Highly recommend!"</blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar">AP</div>
+          <div class="author-info"><h4>Aisha Patel</h4><p>Founder, Glow Salon</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact Section ===== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="centered">
+      <p class="section-label">Contact Us</p>
+      <h2 class="section-title">Let's Build Something Great</h2>
+      <p class="section-sub">Ready to grow? Drop us a message and we'll get back to you within 24 hours.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Get in Touch</h3>
+        <p>We'd love to hear about your business goals. Reach out through any of these channels.</p>
+        <div class="contact-item"><div class="ci-icon">📍</div><div><p><strong>Address</strong></p><p>123 Main Street, Downtown, City</p></div></div>
+        <div class="contact-item"><div class="ci-icon">📧</div><div><p><strong>Email</strong></p><p>hello@nexabrand.com</p></div></div>
+        <div class="contact-item"><div class="ci-icon">📞</div><div><p><strong>Phone</strong></p><p>+1 (555) 123-4567</p></div></div>
+      </div>
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" placeholder="John Doe" required>
+          <span class="form-error" id="nameError">Please enter your name.</span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" placeholder="john@example.com" required>
+          <span class="form-error" id="emailError">Please enter a valid email.</span>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message *</label>
+          <textarea id="message" placeholder="Tell us about your project..." required></textarea>
+          <span class="form-error" id="messageError">Please enter a message.</span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">NexaBrand</div>
+    <div class="footer-links">
+      <a href="#">Twitter</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 NexaBrand Digital Marketing Agency. All rights reserved.</p>
+</footer>
+
+<!-- ===== Pitch Modal ===== -->
+<div class="modal-overlay" id="pitchModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>🎤 NexaBrand Pitch Deck</h2>
+    <p class="modal-sub">Our 5-step approach to transforming your business.</p>
+    <div class="modal-step"><div class="step-num">1</div><div class="step-content"><h4>Discovery Call</h4><p>We learn about your business, goals, audience, and current challenges.</p></div></div>
+    <div class="modal-step"><div class="step-num">2</div><div class="step-content"><h4>Strategy Blueprint</h4><p>We design a custom marketing roadmap with clear KPIs and timelines.</p></div></div>
+    <div class="modal-step"><div class="step-num">3</div><div class="step-content"><h4>Design & Build</h4><p>Our team creates stunning assets — websites, ads, content, and campaigns.</p></div></div>
+    <div class="modal-step"><div class="step-num">4</div><div class="step-content"><h4>Launch & Optimize</h4><p>We go live, monitor performance, and continuously optimize for better results.</p></div></div>
+    <div class="modal-step"><div class="step-num">5</div><div class="step-content"><h4>Report & Scale</h4><p>Monthly reports with insights, and strategies to scale what's working best.</p></div></div>
+    <div style="text-align:center;margin-top:24px"><a href="#contact" class="btn btn-primary" onclick="closeModal()">Let's Talk →</a></div>
+  </div>
+</div>
+
+<!-- ===== Toast Container ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== JavaScript ===== -->
+<script>
+/* --- Theme Toggle --- */
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const btn = document.querySelector('.theme-toggle');
+  btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  document.querySelector('.theme-toggle').textContent = '☀️';
+}
+
+/* --- Mobile Menu --- */
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('active');
+}
+
+/* --- Modal --- */
+function openModal() { document.getElementById('pitchModal').classList.add('active'); }
+function closeModal() { document.getElementById('pitchModal').classList.remove('active'); }
+document.getElementById('pitchModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* --- Toast Notification --- */
+function showToast(message, icon) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<span>${icon || '✅'}</span> ${message}`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+/* --- Contact Form --- */
+function handleSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('name');
+  const email = document.getElementById('email');
+  const message = document.getElementById('message');
+  let valid = true;
+
+  // Reset errors
+  document.querySelectorAll('.form-error').forEach(el => el.style.display = 'none');
+
+  if (!name.value.trim()) {
+    document.getElementById('nameError').style.display = 'block'; valid = false;
+  }
+  if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    document.getElementById('emailError').style.display = 'block'; valid = false;
+  }
+  if (!message.value.trim()) {
+    document.getElementById('messageError').style.display = 'block'; valid = false;
+  }
+
+  if (valid) {
+    showToast('Message sent successfully! We\'ll be in touch soon.', '🎉');
+    e.target.reset();
+  }
+}
+
+/* --- Animated Counters --- */
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counters = entry.target.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        const target = +counter.dataset.target;
+        const duration = 2000;
+        const start = performance.now();
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // easeOutQuart
+          const ease = 1 - Math.pow(1 - progress, 4);
+          counter.textContent = Math.floor(ease * target) + (target === 98 ? '%' : '+');
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      });
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+counterObserver.observe(document.getElementById('stats'));
+</script>
+</body>
+</html>
